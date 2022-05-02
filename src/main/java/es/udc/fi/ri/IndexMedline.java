@@ -101,7 +101,7 @@ public class IndexMedline {
     static void indexDoc(IndexWriter writer, Path file) throws IOException {
 
         try (InputStream stream = Files.newInputStream(file)) {
-            String line;
+            String line;System.out.println("PATATAAAAA");
             BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
             while ((line = br.readLine()) != null) {
                 int num;
@@ -116,6 +116,7 @@ public class IndexMedline {
                             break;
                         contents += line2 + " ";
                     }
+
                     doc.add(new Field("DocIDMedline", String.valueOf(num), TYPE_STORED));
 
                     doc.add(new Field("contents", contents, TYPE_STORED));
@@ -135,7 +136,7 @@ public class IndexMedline {
     public static void main(String[] args) {
 
         String indexPath = "index";
-        String docPath = null;
+        Path docPath = null;
 
         String vectorDictSource = null;
         Path docDir= null;
@@ -151,7 +152,7 @@ public class IndexMedline {
                     indexPath = args[++i];
                     break;
                 case "-docs":
-                    docPath = args[++i];
+                    docPath = Path.of(args[++i]);
                     break;
                 case "-create":
                     create = "create";
@@ -170,7 +171,11 @@ public class IndexMedline {
             }
         }
 
-
+        if (!Files.isReadable(docPath)) {
+            System.out.println("Document directory '" + docPath.toAbsolutePath()
+                    + "' does not exist or is not readable, please check the path");
+            System.exit(1);
+        }
         Date start = new Date();
         try {
             System.out.println("Indexing to directory '" + indexPath + "'...");
@@ -179,8 +184,26 @@ public class IndexMedline {
             Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
-            iwc.setOpenMode(openmode);
 
+            switch (create) {
+                case "create":
+                    // Create a new index in the directory, removing any
+                    // previously indexed documents:
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+                    break;
+                case "create_or_append":
+                    // Create a new index in the directory, removing any
+                    // previously indexed documents:
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+                    break;
+                case "append":
+                    // Create a new index in the directory, removing any
+                    // previously indexed documents
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.APPEND);
+                    break;
+                default:
+                    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+            }
             switch (indexingmodel) {
                 case "jm":
                     iwc.setSimilarity(new LMJelinekMercerSimilarity(lambda));
@@ -195,7 +218,7 @@ public class IndexMedline {
 
             IndexWriter writer = new IndexWriter(dir, iwc);
 
-            indexDoc(writer, Path.of(docPath));
+            indexDoc(writer, docPath);
 
             try {
                 writer.commit();
