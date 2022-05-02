@@ -31,7 +31,7 @@ public class IndexMedline {
 
     static String indexPath = "index"; //default index path is a folder named index located in the root dir
     static Path docPath;
-    static String indexingmodel = "jm";
+    static String indexingmodel = "tfidf";
     static float lambda = 0.5f;
     static float mu = 0.5f;
     static IndexWriterConfig.OpenMode openmode = IndexWriterConfig.OpenMode.CREATE;
@@ -160,14 +160,14 @@ public class IndexMedline {
                     create = args[++i];
                     break;
                 case "-indexingmodel":
-                    indexingmodel=args[++i];
-                    if (indexingmodel=="jm")
-                        lambda= Float.valueOf(args[++i]);
+                    indexingmodel = args[++i];
+                    if (indexingmodel.equals("jm"))
+                        lambda = Float.valueOf(args[++i]);
                     break;
                 default:
 
-                        throw new IllegalArgumentException("unknown parameter " + args[i]);
-
+                    throw new IllegalArgumentException("unknown parameter " + args[i]);
+            }
         }
 
 
@@ -211,4 +211,4 @@ public class IndexMedline {
             System.out.println("Caught a " + e.getClass() + " with message: " + e.getMessage());
         }
     }
-}}
+}
