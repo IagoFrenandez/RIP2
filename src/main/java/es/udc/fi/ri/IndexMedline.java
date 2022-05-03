@@ -3,17 +3,16 @@ package es.udc.fi.ri;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.demo.knn.KnnVectorDict;
 import org.apache.lucene.document.*;
-import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
+import org.apache.lucene.index.*;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.LMDirichletSimilarity;
 import org.apache.lucene.search.similarities.LMJelinekMercerSimilarity;
 import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.IOUtils;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -28,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class IndexMedline {
 
-
+    static final String KNN_DICT = "knn-dict";
     static String indexPath = "index"; //default index path is a folder named index located in the root dir
     static Path docPath;
     static String indexingmodel = "tfidf";
@@ -173,8 +172,8 @@ public class IndexMedline {
                 case "-docs":
                     docPath = Path.of(args[++i]);
                     break;
-                case "-create":
-                    create = "create";
+                case "-knn_dict":
+                    vectorDictSource = args[++i];
                     break;
                 case "-openmode":
                     create = args[++i];
@@ -203,6 +202,13 @@ public class IndexMedline {
             Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
+            KnnVectorDict vectorDictInstance = null;
+            long vectorDictSize = 0;
+            if (vectorDictSource != null) {
+                KnnVectorDict.build(Paths.get(vectorDictSource), dir, KNN_DICT);
+                vectorDictInstance = new KnnVectorDict(dir, KNN_DICT);
+                vectorDictSize = vectorDictInstance.ramBytesUsed();
+            }
 
             switch (create) {
                 case "create":
@@ -235,20 +241,27 @@ public class IndexMedline {
                     break;
             }
 
-            IndexWriter writer = new IndexWriter(dir, iwc);
+            try(IndexWriter writer = new IndexWriter(dir, iwc)){
 
             indexDocs(writer, docPath);
-
-            try {
-                writer.commit();
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } finally {
+                IOUtils.close(vectorDictInstance);
             }
-
             Date end = new Date();
-            System.out.println(end.getTime() - start.getTime() + " total milliseconds");
-
+            try (IndexReader reader = DirectoryReader.open(dir)) {
+                System.out.println(
+                        "Indexed "
+                                + reader.numDocs()
+                                + " documents in "
+                                + (end.getTime() - start.getTime())
+                                + " milliseconds");
+                if (reader.numDocs() > 100
+                        && vectorDictSize < 1_000_000
+                        && System.getProperty("smoketester") == null) {
+                    throw new RuntimeException(
+                            "Are you (ab)using the toy vector dictionary? See the package javadocs to understand why you got this exception.");
+                }
+            }
         } catch (IOException e) {
             System.out.println("Caught a " + e.getClass() + " with message: " + e.getMessage());
         }
