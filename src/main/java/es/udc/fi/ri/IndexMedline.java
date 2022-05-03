@@ -38,7 +38,26 @@ public class IndexMedline {
 
     private IndexMedline() {
     }
+    static void indexDocs(final IndexWriter writer, Path path) throws IOException, AccessDeniedException {
 
+        if (Files.isDirectory(path)) {
+            Files.walkFileTree(path, new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                    try {
+                        indexDoc(writer, file);        //toMillis para saber cuanto tarda en indexar en milisegundos
+                    } catch (@SuppressWarnings("unused")
+                            IOException ignore) {
+                        ignore.printStackTrace(System.err);
+                        // don't index files that can't be read.
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } else {
+            indexDoc(writer, path);
+        }
+    }
 
     private static void readConfigFile(String path) {
 
@@ -99,7 +118,7 @@ public class IndexMedline {
     }
 
     static void indexDoc(IndexWriter writer, Path file) throws IOException {
-
+        System.out.println("PATATA4");
         try (InputStream stream = Files.newInputStream(file)) {
             String line;System.out.println("PATATAAAAA");
             BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
@@ -218,7 +237,7 @@ public class IndexMedline {
 
             IndexWriter writer = new IndexWriter(dir, iwc);
 
-            indexDoc(writer, docPath);
+            indexDocs(writer, docPath);
 
             try {
                 writer.commit();
