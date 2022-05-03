@@ -117,9 +117,9 @@ public class IndexMedline {
     }
 
     static void indexDoc(IndexWriter writer, Path file) throws IOException {
-        System.out.println("PATATA4");
+
         try (InputStream stream = Files.newInputStream(file)) {
-            String line;System.out.println("PATATAAAAA");
+            String line;
             BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
             while ((line = br.readLine()) != null) {
                 int num;
@@ -142,6 +142,17 @@ public class IndexMedline {
                     if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
                         writer.addDocument(doc);
                     } else {
+                        writer.updateDocument(new Term("path", file.toString()), doc);
+                    }
+                    if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
+                        // New index, so we just add the document (no old document can be there):
+                        System.out.println("adding " + file);
+                        writer.addDocument(doc);
+                    } else {
+                        // Existing index (an old copy of this document may have been indexed) so
+                        // we use updateDocument instead to replace the old one matching the exact
+                        // path, if present:
+                        System.out.println("updating " + file);
                         writer.updateDocument(new Term("path", file.toString()), doc);
                     }
                 } catch (NumberFormatException e) {
