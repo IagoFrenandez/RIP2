@@ -18,13 +18,13 @@ package es.udc.fi.ri;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -42,14 +42,55 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.QueryVisitor;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.LMJelinekMercerSimilarity;
 import org.apache.lucene.store.FSDirectory;
 
 /** Simple command-line based search demo. */
 public class SearchFiles {
 
+	static HashMap<Integer, String> queries = new HashMap<>();
+	static final String ALL_QUERIES = "1-93";
+	static final Path QUERIES_PATH = Paths.get("");
+	static final Path RELEVANCE_PATH = Paths.get("");
+	static Path queryFile = QUERIES_PATH;
+
 	private SearchFiles() {
 	}
+	public static HashMap<Integer, String> findQuery(String n) throws IOException {
+		try (InputStream stream = Files.newInputStream(queryFile)) {
+			String line;
+			HashMap<Integer, String> result = new HashMap<>();
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+			while ((line = br.readLine()) != null) {
+				if (line.equals(n)){
+					result.put(Integer.parseInt(n), br.readLine());
+					break;
+				}
+			}
+			br.close();
+			stream.close();
+			return result;
+		}
+	}
+	public static HashMap<Integer, String> findQueries(String range) throws IOException {
 
+		HashMap<Integer, String> result = new HashMap<>();
+		String nums[] = range.split("-");
+
+		if (nums.length != 2) {
+			System.err.println("Query range is in an incorrect format; it must be Int1-Int2");
+			System.exit(1);
+		}
+
+		int top = Integer.parseInt(nums[0]);
+		int bot = Integer.parseInt(nums[1]);
+
+		for (int i = top; i <= bot; i++) {
+			result.putAll(findQuery(String.valueOf(i)));
+		}
+		return result;
+	}
 	/** Simple command-line based search demo. */
 	public static void main(String[] args) throws Exception {
 		String usage = "Usage:\tjava org.apache.lucene.demo.SearchFiles [-index dir] [-field f] [-repeat n] [-queries file] [-query string] [-raw] [-paging hitsPerPage] [-knn_vector knnHits]\n\nSee http://lucene.apache.org/core/9_0_0/demo/ for details.";
@@ -57,11 +98,13 @@ public class SearchFiles {
 			System.out.println(usage);
 			System.exit(0);
 		}
-
+		String indexingmodel = "tfidf";
 		String index = "index";
 		String field = "contents";
 		String queries = null;
-		int repeat = 0;
+		float lambda = 0.5f;
+		int cut = 1;
+		int top = 1;
 		boolean raw = false;
 		int knnVectors = 0;
 		String queryString = null;
@@ -69,34 +112,34 @@ public class SearchFiles {
 
 		for (int i = 0; i < args.length; i++) {
 			switch (args[i]) {
-			case "-index":
+			case "-indexin":
 				index = args[++i];
 				break;
-			case "-field":
+			/*case "-field":
 				field = args[++i];
-				break;
+				break;*/
 			case "-queries":
 				queries = args[++i];
 				break;
-			case "-query":
-				queryString = args[++i];
+			case "-top":
+				top = Integer.parseInt(args[++i]);
 				break;
-			case "-repeat":
-				repeat = Integer.parseInt(args[++i]);
-				break;
-			case "-raw":
-				raw = true;
-				break;
-			case "-paging":
-				hitsPerPage = Integer.parseInt(args[++i]);
-				if (hitsPerPage <= 0) {
+			case "-cut":
+				cut = Integer.parseInt(args[++i]);
+				if (cut <= 0) {
 					System.err.println("There must be at least 1 hit per page.");
 					System.exit(1);
 				}
 				break;
-			case "-knn_vector":
-				knnVectors = Integer.parseInt(args[++i]);
 				break;
+
+			case "-search":
+				indexingmodel = args[++i];
+				if (indexingmodel.equals("jm"))
+					lambda = Float.valueOf(args[++i]);
+				break;
+				break;
+
 			default:
 				System.err.println("Unknown argument: " + args[i]);
 				System.exit(1);
@@ -117,47 +160,39 @@ public class SearchFiles {
 			in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 		}
 		QueryParser parser = new QueryParser(field, analyzer);
-		while (true) {
-			if (queries == null && queryString == null) { // prompt the user
-				System.out.println("Enter query: ");
-			}
-
-			String line = queryString != null ? queryString : in.readLine();
-
-			if (line == null || line.length() == -1) {
+		switch (indexingmodel) {
+			case "jm":
+				searcher.setSimilarity(new LMJelinekMercerSimilarity(lambda));
 				break;
-			}
-
-			line = line.trim();
-			if (line.length() == 0) {
+			case "tfidf":
+				searcher.setSimilarity(new ClassicSimilarity());
 				break;
-			}
+			default:
+				searcher.setSimilarity(new ClassicSimilarity());
+				break;
+		}
 
-			Query query = parser.parse(line);
-			if (knnVectors > 0) {
-				query = addSemanticQuery(query, vectorDict, knnVectors);
-			}
+
 			System.out.println("Searching for: " + query.toString(field));
-
-			if (repeat > 0) { // repeat & time as benchmark
-				Date start = new Date();
-				for (int i = 0; i < repeat; i++) {
-					searcher.search(query, 100);
-				}
-				Date end = new Date();
-				System.out.println("Time: " + (end.getTime() - start.getTime()) + "ms");
-			}
-
-			doPagingSearch(in, searcher, query, hitsPerPage, raw, queries == null && queryString == null);
-
-			if (queryString != null) {
-				break;
-			}
+		for (Map.Entry<Integer, String> entry : queries.entrySet()) {
+			int num = entry.getKey();
+			String line = entry.getValue();
+			line = line.trim();
+			Query query = parser.parse(line);
+			System.out.println("Searching for: " + query.toString(field));
+			doPagingSearch(searcher, query, num);
 		}
-		if (vectorDict != null) {
-			vectorDict.close();
-		}
+		/*if (knnVectors > 0) {
+			query = addSemanticQuery(query, vectorDict, knnVectors);
+		}*/
+		float sum = 0;
+		/*for (Float d : metrics)
+			sum += d;
+		System.out.println("Mean of the metric for all the queries = " + (float) sum / queryCount);*/
+
+
 		reader.close();
+	}
 	}
 
 	/**
@@ -170,6 +205,40 @@ public class SearchFiles {
 	 * collected to fill 5 result pages. If the user wants to page beyond this
 	 * limit, then the query is executed another time and all hits are collected.
 	 */
+	public static List<Integer> findRelevantDocs(Path file, int query) throws IOException {
+
+		List<Integer> result = new ArrayList<>();
+		try (InputStream stream = Files.newInputStream(file)) {
+			String line;
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+			while ((line = br.readLine()) != null) {
+				try {
+					int num = Integer.parseInt(line);
+
+					if (num == query) {
+						String line2;
+						String[] aux;
+						while ((line2 = br.readLine()) != null) {
+							if (line2 == null || line2.trim().equals("/"))
+								break;
+							aux = line2.split("\\s+");
+							for (String str : aux) {
+								int num2;
+								try {
+									num2 = Integer.parseInt(str);
+									result.add(num2);
+								} catch (NumberFormatException e) {
+								}
+							}
+						}
+					}
+				} catch (NumberFormatException e) {
+				}
+			}
+			return result;
+		}
+	}
+
 	public static void doPagingSearch(BufferedReader in, IndexSearcher searcher, Query query, int hitsPerPage,
 			boolean raw, boolean interactive) throws IOException {
 
