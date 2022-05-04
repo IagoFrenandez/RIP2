@@ -28,18 +28,11 @@ import java.util.*;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.demo.knn.DemoEmbeddings;
-import org.apache.lucene.demo.knn.KnnVectorDict;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.KnnVectorQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.QueryVisitor;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
@@ -47,34 +40,45 @@ import org.apache.lucene.search.similarities.LMJelinekMercerSimilarity;
 import org.apache.lucene.store.FSDirectory;
 
 /** Simple command-line based search demo. */
-public class SearchFiles {
+public class SearchEvalMedline {
 
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
 	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
 	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
-	static int queryCount;
+	static int queryCount=0;
 	static int queryMode =0;
 	static String queryRange = "1-3";
 	static String queryNum = "3";
 
-	private SearchFiles() {
+	private SearchEvalMedline() {
 	}
 	public static HashMap<Integer, String> findQuery(String n) throws IOException {
 		try (InputStream stream = Files.newInputStream(queryFile)) {
 			String line;
+			String aux = "";
+			int m= Integer.parseInt(n)+1;
+			System.out.println(m);
 			HashMap<Integer, String> result = new HashMap<>();
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 			while ((line = br.readLine()) != null) {
-				if (line.equals(n)){
-					result.put(Integer.parseInt(n), br.readLine());
+				if (line.equals(".I " + n)  ) {
+					aux= aux + br.readLine();
+					line= br.readLine();
+					while (!line.equals(".I " + String.valueOf(m)) ) {
+						aux= aux + line;
+						line= br.readLine();
+						if (line == null){
+							result.put(Integer.parseInt(n), aux);
+							break;}
+					}
+					result.put(Integer.parseInt(n), aux);
 					break;
 				}
 			}
 			br.close();
 			stream.close();
-			System.out.println("Coliflor " + result.toString());
 			return result;
 		}
 	}
@@ -272,7 +276,7 @@ public class SearchFiles {
 		int n = 1;
 		for (int i = 0; i < end; i++) {
 			Document doc = searcher.doc(hits[i].doc);
-			int id = Integer.parseInt(doc.get("DocIDNPL"));
+			int id = Integer.parseInt(doc.get("DocIDMedline"));
 			for (int idaux : relevantDocs) {
 				if (id == idaux) {
 					relevantSet.add(id);
@@ -287,7 +291,7 @@ public class SearchFiles {
 		end = Math.min(numTotalHits, top);
 		for (int i = 0; i < end; i++) {
 			Document doc = searcher.doc(hits[i].doc);
-			int id = Integer.parseInt(doc.get("DocIDNPL"));
+			int id = Integer.parseInt(doc.get("DocIDMedline"));
 			System.out.println((i + 1) + ". Doc ID: " + id + " score = " + hits[i].score);
 		}
 		System.out.println();
