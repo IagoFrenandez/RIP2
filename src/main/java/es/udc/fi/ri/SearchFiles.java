@@ -50,7 +50,7 @@ import org.apache.lucene.store.FSDirectory;
 public class SearchFiles {
 
 	static HashMap<Integer, String> queries = new HashMap<>();
-	static final String ALL_QUERIES = "1-93";
+	static final String ALL_QUERIES = "1-30";
 	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
 	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
@@ -74,11 +74,12 @@ public class SearchFiles {
 			}
 			br.close();
 			stream.close();
+			System.out.println("Coliflor " + result.toString());
 			return result;
 		}
 	}
 	public static HashMap<Integer, String> findQueries(String range) throws IOException {
-
+		System.out.println("Guisante");
 		HashMap<Integer, String> result = new HashMap<>();
 		String nums[] = range.split("-");
 
@@ -123,7 +124,7 @@ public class SearchFiles {
 				field = args[++i];
 				break;*/
 			case "-queries":
-				if(args[i+1] == "all"){
+				if(args[i+1].equals("all")){
 					queryMode = 0;	//si queryMode = 0, buscamos todas las queries
 					queryRange = ALL_QUERIES;
 					i++;
@@ -176,20 +177,25 @@ public class SearchFiles {
 				searcher.setSimilarity(new ClassicSimilarity());
 				break;
 		}
-
+		System.out.println("Cebolla "+queryRange);
 		if(queryMode == 0){
-			queries.putAll(findQuery(queryRange));
+			System.out.println("Zanahoria");
+			queries.putAll(findQueries(queryRange));
 		}else{
+			System.out.println("Lechuga");
 			queries.putAll(findQuery(queryNum));
 		}
 
-		for (Map.Entry<Integer, String> entry : queries.entrySet()) {
-			int num = entry.getKey();
-			String line = entry.getValue();
-			line = line.trim();
-			Query query = parser.parse(line);
-			System.out.println("Searching for: " + query.toString(field));
-			doPagingSearch(searcher, query, num,cut,top,metrics);
+		System.out.println("Tomate "+ queries.toString());
+		for
+			(Map.Entry<Integer, String> entry : queries.entrySet()) {
+				System.out.println("Remolacha");
+				int num = entry.getKey();
+				String line = entry.getValue();
+				line = line.trim();
+				Query query = parser.parse(line);
+				System.out.println("Searching for: " + query.toString(field));
+				doPagingSearch(searcher, query, num,cut,top,metrics);
 		}
 		/*if (knnVectors > 0) {
 			query = addSemanticQuery(query, vectorDict, knnVectors);
