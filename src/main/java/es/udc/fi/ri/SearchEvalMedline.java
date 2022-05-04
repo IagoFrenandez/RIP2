@@ -70,10 +70,10 @@ public class SearchEvalMedline {
 						aux= aux + line;
 						line= br.readLine();
 						if (line == null){
-							result.put(Integer.parseInt(n), aux);
+							result.put(Integer.parseInt(n), aux.toLowerCase(Locale.ROOT));
 							break;}
 					}
-					result.put(Integer.parseInt(n), aux);
+					result.put(Integer.parseInt(n), aux.toLowerCase(Locale.ROOT));
 					break;
 				}
 			}
@@ -197,7 +197,7 @@ public class SearchEvalMedline {
 				int num = entry.getKey();
 				String line = entry.getValue();
 				line = line.trim();
-				Query query = parser.parse(line);
+				Query query = parser.parse(QueryParser.escape(line));
 				System.out.println("Searching for: " + query.toString(field));
 				doPagingSearch(searcher, query, num,cut,top,metrics);
 		}
