@@ -2,6 +2,7 @@
 package es.udc.fi.ri;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.compound.hyphenation.PatternParser;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.demo.knn.KnnVectorDict;
 import org.apache.lucene.document.*;
@@ -20,12 +21,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.security.PublicKey;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class IndexMedline {
+    //Medline
 
     static final String KNN_DICT = "knn-dict";
     static String indexPath = "index"; //default index path is a folder named index located in the root dir
@@ -37,6 +40,38 @@ public class IndexMedline {
 
     private IndexMedline() {
     }
+static void parserall(Path file, Path indexpath) throws IOException {
+    try (InputStream stream = Files.newInputStream(file)) {
+        String line;
+        String aux = "";
+        String[] aux2;
+        int n=1;
+        File auxfile = new File(indexpath.toString()+"/"+"meddocs");
+        auxfile.mkdirs();
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        while ((line = br.readLine()) != null) {
+            if (line.equals(".I " + n)  ) {
+                FileWriter documento= new FileWriter(indexpath.toString()+"/"+"meddocs/"+n+".txt");
+                PrintWriter pw = new PrintWriter(documento);
+                line=br.readLine();
+                System.out.println(line);
+                if ((line).equals(".W")){
+                    line=br.readLine();
+                    while (!line.equals(".I " + String.valueOf(n+1)) ) {
+                        pw.println(line);
+                        line= br.readLine();
+                        if (line == null){
+                            break;}
+                }
+                }
+            }
+            n++;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
     static void indexDocs(final IndexWriter writer, Path path) throws IOException, AccessDeniedException {
 
         if (Files.isDirectory(path)) {
@@ -58,50 +93,7 @@ public class IndexMedline {
         }
     }
 
-    private static void readConfigFile(String path) {
 
-        FileInputStream inputStream;
-        Properties prop = new Properties();
-
-        try {
-            inputStream = new FileInputStream(path);
-            prop.load(inputStream);
-        } catch (IOException ex) {
-            System.out.println("Error reading config file: " + ex);
-            System.exit(-1);
-        }
-
-        //Read and store doc path
-        String docsList = prop.getProperty("docs");
-        if (docsList != null) {
-            String[] docsSplit = docsList.split(" ");
-            docPath = Paths.get(docsSplit[0]);
-
-        } else {
-            System.out.println("Error in the config file, there is no doc path");
-            System.exit(-1);
-        }
-
-        //Read and store doc path
-        String im = prop.getProperty("indexingmodel");
-        if (im != null) {
-            String[] imsplit = im.split(" ");
-            if (imsplit.length == 2) {
-                indexingmodel = imsplit[0];
-                if (imsplit[0].equals("jm"))
-                    lambda = Float.parseFloat(imsplit[1]);
-                else if (imsplit[0].equals("dir"))
-                    mu = Float.parseFloat(imsplit[1]);
-                else
-                    System.out.println("Error reading Indexing Model, defaulting to tfidf");
-            } else if (imsplit.length == 1 && imsplit[0].equals("tfidf"))
-                indexingmodel = imsplit[0];
-            else
-                System.out.println("Error reading Indexing Model, defaulting to tfidf");
-        } else {
-            System.out.println("Error reading Indexing Model, defaulting to tfidf");
-        }
-    }
 
     public static final FieldType TYPE_STORED = new FieldType();
 
@@ -117,7 +109,6 @@ public class IndexMedline {
     }
 
     static void indexDoc(IndexWriter writer, Path file) throws IOException {
-
         try (InputStream stream = Files.newInputStream(file)) {
             String line;
             BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
@@ -162,7 +153,7 @@ public class IndexMedline {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         String indexPath = "index";
         Path docPath = null;
@@ -199,7 +190,7 @@ public class IndexMedline {
                     throw new IllegalArgumentException("unknown parameter " + args[i]);
             }
         }
-
+        parserall(Path.of("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.ALL"),Path.of(indexPath));
         if (!Files.isReadable(docPath)) {
             System.out.println("Document directory '" + docPath.toAbsolutePath()
                     + "' does not exist or is not readable, please check the path");
