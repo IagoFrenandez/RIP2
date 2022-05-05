@@ -45,7 +45,7 @@ public class SearchEvalMedline {
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
 	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
-	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL.OLD");
+	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
 	static int queryCount=0;
 	static int queryMode =0;
@@ -134,11 +134,11 @@ public class SearchEvalMedline {
 					queryRange = ALL_QUERIES;
 					i++;
 				}else if(args[i+1].contains("-")){
-					queryMode = 1; //Buscamos un rango de queries
+					queryMode = 0; //Buscamos un rango de queries
 					queryRange = args[i+1];
 					i++;
 				}else {
-					queryMode = 2; //Buscamos una query concreta
+					queryMode = 1; //Buscamos una query concreta
 					queryNum = args[i+1];
 					i++;
 				}
@@ -226,37 +226,21 @@ public class SearchEvalMedline {
 	 * limit, then the query is executed another time and all hits are collected.
 	 */
 	public static List<Integer> findRelevantDocs(Path file, int query) throws IOException {
+		List<Integer> relevantDocs = new ArrayList<>();
+		BufferedReader reader = Files.newBufferedReader(file);
+		String line = reader.readLine();
+		while (line != null) {
+			String[] tokens = line.split(" ");
+			if (Integer.parseInt(tokens[0])==query) {
+				relevantDocs.add(Integer.parseInt(tokens[2]));
 
-		List<Integer> result = new ArrayList<>();
-		try (InputStream stream = Files.newInputStream(file)) {
-			String line;
-			BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-			while ((line = br.readLine()) != null) {
-				try {
-					int num = Integer.parseInt(line);
-
-					if (num == query) {
-						String line2;
-						String[] aux;
-						while ((line2 = br.readLine()) != null) {
-							if (line2 == null || line2.trim().equals("/"))
-								break;
-							aux = line2.split("\\s+");
-							for (String str : aux) {
-								int num2;
-								try {
-									num2 = Integer.parseInt(str);
-									result.add(num2);
-								} catch (NumberFormatException e) {
-								}
-							}
-						}
-					}
-				} catch (NumberFormatException e) {
-				}
 			}
-			return result;
+			line = reader.readLine();
+
 		}
+		reader.close();
+		return relevantDocs;
+
 	}
 
 	public static void doPagingSearch(IndexSearcher searcher, Query query, int num, int cut, int top, List<Float> metrics) throws IOException {
