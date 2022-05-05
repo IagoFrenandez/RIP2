@@ -195,7 +195,11 @@ static void parserall(Path file, Path indexpath) throws IOException {
                     throw new IllegalArgumentException("unknown parameter " + args[i]);
             }
         }
-        parserall(Path.of("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.ALL"),Path.of("C:\\Users\\iagof\\Desktop\\RI\\Pruebas"));
+
+        if (String.valueOf(docPath).contains(".ALL") || (String.valueOf(docPath).contains(".all"))) {
+            parserall(docPath,docPath.getParent());
+            docPath=docPath.getParent();
+        }
         if (!Files.isReadable(docPath)) {
             System.out.println("Document directory '" + docPath.toAbsolutePath()
                     + "' does not exist or is not readable, please check the path");
