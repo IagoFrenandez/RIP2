@@ -49,22 +49,27 @@ static void parserall(Path file, Path indexpath) throws IOException {
         File auxfile = new File(indexpath.toString()+"/"+"meddocs");
         auxfile.mkdirs();
         BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-        while ((line = br.readLine()) != null) {
+        line = br.readLine();
+        while (line  != null) {
             if (line.equals(".I " + n)  ) {
-                FileWriter documento= new FileWriter(indexpath.toString()+"/"+"meddocs/"+n+".txt");
+                FileWriter documento= new FileWriter(indexpath.toString()+"/"+"meddocs/"+n+".txt",true);
                 PrintWriter pw = new PrintWriter(documento);
                 line=br.readLine();
                 System.out.println(line);
                 if ((line).equals(".W")){
                     line=br.readLine();
+                    pw.println(n);
                     while (!line.equals(".I " + String.valueOf(n+1)) ) {
                         pw.println(line);
                         line= br.readLine();
                         if (line == null){
+                            documento.close();
                             break;}
                 }
                 }
+                documento.close();
             }
+
             n++;
         }
     } catch (IOException e) {
@@ -190,7 +195,7 @@ static void parserall(Path file, Path indexpath) throws IOException {
                     throw new IllegalArgumentException("unknown parameter " + args[i]);
             }
         }
-        parserall(Path.of("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.ALL"),Path.of(indexPath));
+        parserall(Path.of("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.ALL"),Path.of("C:\\Users\\iagof\\Desktop\\RI\\Pruebas"));
         if (!Files.isReadable(docPath)) {
             System.out.println("Document directory '" + docPath.toAbsolutePath()
                     + "' does not exist or is not readable, please check the path");

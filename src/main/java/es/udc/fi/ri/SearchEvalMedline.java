@@ -45,7 +45,7 @@ public class SearchEvalMedline {
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
 	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
-	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
+	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL.OLD");
 	static Path queryFile = QUERIES_PATH;
 	static int queryCount=0;
 	static int queryMode =0;
@@ -64,6 +64,7 @@ public class SearchEvalMedline {
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 			while ((line = br.readLine()) != null) {
 				if (line.equals(".I " + n)  ) {
+					br.readLine();
 					aux= aux + br.readLine();
 					line= br.readLine();
 					while (!line.equals(".I " + String.valueOf(m)) ) {
