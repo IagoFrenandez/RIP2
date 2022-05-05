@@ -38,14 +38,23 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.LMJelinekMercerSimilarity;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import java.io.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /** Simple command-line based search demo. */
 public class SearchEvalMedline {
 
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
-	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
-	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
+	static final Path QUERIES_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.QRY");
+	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
 	static int queryCount=0;
 	static int queryMode =0;
@@ -119,6 +128,15 @@ public class SearchEvalMedline {
 		int knnVectors = 0;
 		String queryString = null;
 		int hitsPerPage = 10;
+
+		//Documento con las salidas del ranking
+		String outputfile = "medline."+indexingmodel+"."+hitsPerPage+".lambda."+lambda+"qall"+".txt";
+		String outputfile2 = "medline."+indexingmodel+"."+cut+".q"+queryRange+".csv";
+
+		//buffer con la información que va a escribir en el documento
+		BufferedWriter bw = new BufferedWriter(new FileWriter(outputfile));
+		BufferedWriter bw2 = new BufferedWriter(new FileWriter(outputfile2));
+
 
 		for (int i = 0; i < args.length; i++) {
 			switch (args[i]) {
@@ -200,7 +218,8 @@ public class SearchEvalMedline {
 				line = line.trim();
 				Query query = parser.parse(QueryParser.escape(line));
 				System.out.println("Searching for: " + query.toString(field));
-				doPagingSearch(searcher, query, num,cut,top,metrics);
+				doPagingSearch(searcher, query, num,cut,top,metrics, field, bw, bw2);
+				bw.write("\n");
 		}
 		/*if (knnVectors > 0) {
 			query = addSemanticQuery(query, vectorDict, knnVectors);
@@ -210,8 +229,14 @@ public class SearchEvalMedline {
 			sum += d;
 		System.out.println("Mean of the metric for all the queries = " + (float) sum / queryCount);
 
-
-		reader.close();
+		try {
+			bw.close();
+			bw2.close();
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("Graceful message: exception " + e);
+			e.printStackTrace();
+		}
 	}
 
 
@@ -243,7 +268,7 @@ public class SearchEvalMedline {
 
 	}
 
-	public static void doPagingSearch(IndexSearcher searcher, Query query, int num, int cut, int top, List<Float> metrics) throws IOException {
+	public static void doPagingSearch(IndexSearcher searcher, Query query, int num, int cut, int top, List<Float> metrics, String field, BufferedWriter bw, BufferedWriter bw2) throws IOException {
 		TopDocs results = searcher.search(query, cut);
 		ScoreDoc[] hits = results.scoreDocs;
 		List<Integer> relevantDocs = findRelevantDocs(RELEVANCE_PATH, num);
@@ -254,6 +279,8 @@ public class SearchEvalMedline {
 		System.out.println("RELEVANT DOCS = " + relevantDocs.toString());
 		System.out.println();
 		int numTotalHits = Math.toIntExact(results.totalHits.value);
+		bw.write("Searching for: " + query.toString(field) + "\n");
+		bw.write(numTotalHits + " total matching documents" + "\n");
 		System.out.println(numTotalHits + " total matching documents");
 
 		//this loop is used for calculating the metrics
@@ -262,6 +289,7 @@ public class SearchEvalMedline {
 		for (int i = 0; i < end; i++) {
 			Document doc = searcher.doc(hits[i].doc);
 			int id = Integer.parseInt(doc.get("DocIDMedline"));
+
 			for (int idaux : relevantDocs) {
 				if (id == idaux) {
 					relevantSet.add(id);
@@ -278,15 +306,19 @@ public class SearchEvalMedline {
 			Document doc = searcher.doc(hits[i].doc);
 			int id = Integer.parseInt(doc.get("DocIDMedline"));
 			System.out.println((i + 1) + ". Doc ID: " + id + " score = " + hits[i].score);
+			bw2.write("Doc ID: " + id+",");
+			bw.write(""+(i+1));
+			bw.write(". Doc ID: " + id + " score = " + hits[i].score +"\n");
 		}
 		System.out.println();
 				//P
 				System.out.println("Precision at " + cut + " = " + (float) relevantSet.size() / cut);
 				metrics.add((float) relevantSet.size() / cut);
+				bw2.write(""+(float) relevantSet.size() / cut);
 				//R
 				System.out.println("Recall at " + cut + " = " + (float) relevantSet.size() / relevantDocs.size());
 				metrics.add((float) relevantSet.size() / relevantDocs.size());
-
+				bw2.write(""+(float) relevantSet.size() / relevantDocs.size());
 				//MAP
 				if (relevantSet.size() != 0) {
 					float sum = 0;
@@ -294,6 +326,7 @@ public class SearchEvalMedline {
 						sum += d;
 					System.out.println("Mean Average Precision at " + cut + " = " + (float) sum / relevantSet.size());
 					metrics.add((float) sum / relevantSet.size());
+					bw2.write(""+(float) sum / relevantSet.size()+ "\n");
 				} else
 					System.out.println("Can't compute Mean Average Precision at " + cut + ", no relevant documents found");
 
