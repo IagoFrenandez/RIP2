@@ -195,7 +195,7 @@ public class TrainingTestMedline {
                     System.out.println(args[i]);
                     queryRange= args[i+1];
                     queryRange2=args[i+2];
-                   ;i++;
+                   i++;
                    i++;
                     break;
                 case "-cut":
