@@ -115,8 +115,6 @@ public class TrainingTestMedline {
             documento.append(entry.getKey()+";");
             for ( lambda=1; lambda<11; lambda=lambda+1) {
             searcher.setSimilarity(new LMJelinekMercerSimilarity(lambda/10));
-
-                    System.out.println("Cebolla "+lambda/10);
                     num = entry.getKey();
                     String line = entry.getValue();
                     line = line.trim();
@@ -135,8 +133,10 @@ public class TrainingTestMedline {
         documento.append("Promedio:;");
         for (int i=1;i<aux2.length;i++){
             documento.append((aux2[i]/aux2.length)+";");}
-
+        documento.close();
+        FileWriter documento2= new FileWriter(index+"/"+"medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".test.csv",true);
         searcher.setSimilarity(new LMJelinekMercerSimilarity(auxlambda));
+        documento.append(auxlambda+";"+metrica+"\n");
         for (Map.Entry<Integer, String> entry : queries2.entrySet()) {
             num = entry.getKey();
             String line = entry.getValue();
@@ -145,7 +145,7 @@ public class TrainingTestMedline {
             aux= doPagingSearch(searcher, query, num,cut,metrica);
             System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);}
         System.out.println("Mejor metrica "+ metricas);
-        documento.close();}
+        }
 
 
     public static void main(String[] args) throws Exception {
@@ -182,9 +182,7 @@ public class TrainingTestMedline {
                     tfidf = false;
                     System.out.println(args[i]);
                     queryRange= args[i+1];
-                    System.out.println("Guisante "+queryRange);
                     queryRange2=args[i+2];
-                    System.out.println("Tomate "+queryRange2);
                    ;i++;
                    i++;
                     break;
