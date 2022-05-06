@@ -81,9 +81,12 @@ public class Compare {
                 case "-test":
                    if(args[i+1].equals("t")){
                        test="t";
+                       i++;
                    }else{
                        test="wilcoxon";
                        alpha=   Float.parseFloat(args[i+2]);
+                       i++;
+                       i++;
                    }
                     break;
 
