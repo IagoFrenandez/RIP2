@@ -97,7 +97,7 @@ public class TrainingTestMedline {
             line = line.trim();
             Query query = parser.parse(QueryParser.escape(line));
             aux= doPagingSearch(searcher, query, num,cut,metrica);
-            System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);
+            System.out.println("Para la query "+num+" su metrica en "+metrica+"@"+cut+" es " +aux);
         documento3.append(num+";"+aux+"\n");}
         documento3.close();
 
@@ -127,7 +127,7 @@ public class TrainingTestMedline {
                     line = line.trim();
                     Query query = parser.parse(QueryParser.escape(line));
                     aux= doPagingSearch(searcher, query, num,cut,metrica);
-                System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);
+                System.out.println("Para la query "+num+" su metrica en "+metrica+"@"+cut+" es " +aux);
                     documento.write(String.valueOf(aux)+";");
                     aux2[(int) lambda]+=aux;
                 if (aux>metricas){
@@ -152,7 +152,7 @@ public class TrainingTestMedline {
             aux= doPagingSearch(searcher, query, num,cut,metrica);
             documento2.append(num+";"+aux+"\n");
             aux3+=aux;
-            System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);}
+            System.out.println("Para la query "+num+" su metrica en "+metrica+"@"+cut+" es " +aux);}
 
         System.out.println("Promedio:"+";"+(aux3/queries2.size())+"\n");
         documento2.append("Promedio:"+";"+(aux3/queries2.size())+"\n");

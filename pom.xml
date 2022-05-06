@@ -56,7 +56,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
-            <id>StatsField</id>
+            <id>SearchEvalMedline</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -67,15 +67,15 @@
               </descriptorRefs>
               <archive>
                 <manifest>
-                  <mainClass>es.udc.fi.ri.StatsField</mainClass>
+                  <mainClass>es.udc.fi.ri.SearchEvalMedline</mainClass>
                 </manifest>
               </archive>
-              <finalName>StatsField-${project.version}</finalName>
+              <finalName>SearchEvalMedline-${project.version}</finalName>
             </configuration>
           </execution>
 
           <execution>
-            <id>IndexFiles</id>
+            <id>IndexMedline</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -89,66 +89,46 @@
                   <mainClass>es.udc.fi.ri.IndexMedline</mainClass>
                 </manifest>
               </archive>
-              <finalName>IndexFiles-${project.version}</finalName>
+              <finalName>IndexMedline-${project.version}</finalName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>Compare</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>es.udc.fi.ri.Compare</mainClass>
+                </manifest>
+              </archive>
+              <finalName>Compare-${project.version}</finalName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>TrainingTestMedline</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>es.udc.fi.ri.TrainingTestMedline</mainClass>
+                </manifest>
+              </archive>
+              <finalName>TrainingTestMedline-${project.version}</finalName>
             </configuration>
           </execution>
 
-          <execution>
-            <id>BestTermsInColl</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
-              <archive>
-                <manifest>
-                  <mainClass>es.udc.fi.ri.BestTermsInColl</mainClass>
-                </manifest>
-              </archive>
-              <finalName>BestTermsInColl-${project.version}</finalName>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>BestTermsInDoc</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
-              <archive>
-                <manifest>
-                  <mainClass>es.udc.fi.ri.BestTermsInDoc</mainClass>
-                </manifest>
-              </archive>
-              <finalName>BestTermsInDoc-${project.version}</finalName>
-            </configuration>
-          </execution>
-          
-          <execution>
-            <id>WriteIndex</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
-              <archive>
-                <manifest>
-                  <mainClass>es.udc.fi.ri.WriteIndex</mainClass>
-                </manifest>
-              </archive>
-              <finalName>WriteIndex-${project.version}</finalName>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
 
