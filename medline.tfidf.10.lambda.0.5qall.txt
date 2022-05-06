@@ -1,0 +1,390 @@
+Searching for: the crystalline lens in vertebrates including humans
+2058 total matching documents
+1. Doc ID: 72 score = 2.5110273
+2. Doc ID: 72 score = 2.5110273
+3. Doc ID: 500 score = 1.9335417
+4. Doc ID: 500 score = 1.9335417
+5. Doc ID: 168 score = 1.7308342
+6. Doc ID: 168 score = 1.7308342
+7. Doc ID: 181 score = 1.7199322
+8. Doc ID: 181 score = 1.7199322
+9. Doc ID: 513 score = 1.5267181
+10. Doc ID: 513 score = 1.5267181
+
+Searching for: the relationship of blood and cerebrospinal fluid oxygen concentrationsor partial pressures a method of interest is polarography
+2066 total matching documents
+1. Doc ID: 258 score = 4.566277
+2. Doc ID: 258 score = 4.566277
+3. Doc ID: 289 score = 3.4847128
+4. Doc ID: 289 score = 3.4847128
+5. Doc ID: 713 score = 3.3152547
+6. Doc ID: 713 score = 3.3152547
+7. Doc ID: 187 score = 3.2512028
+8. Doc ID: 187 score = 3.2512028
+9. Doc ID: 237 score = 3.219279
+10. Doc ID: 237 score = 3.219279
+
+Searching for: electron microscopy of lung or bronchi
+2056 total matching documents
+1. Doc ID: 160 score = 1.9061391
+2. Doc ID: 160 score = 1.9061391
+3. Doc ID: 230 score = 1.8322556
+4. Doc ID: 230 score = 1.8322556
+5. Doc ID: 70 score = 1.8244269
+6. Doc ID: 70 score = 1.8244269
+7. Doc ID: 78 score = 1.7831907
+8. Doc ID: 78 score = 1.7831907
+9. Doc ID: 286 score = 1.6213806
+10. Doc ID: 286 score = 1.6213806
+
+Searching for: tissue culture of lung or bronchial neoplasms
+2056 total matching documents
+1. Doc ID: 234 score = 2.1019588
+2. Doc ID: 234 score = 2.1019588
+3. Doc ID: 67 score = 2.0865512
+4. Doc ID: 67 score = 2.0865512
+5. Doc ID: 405 score = 2.0485177
+6. Doc ID: 405 score = 2.0485177
+7. Doc ID: 177 score = 1.8260479
+8. Doc ID: 177 score = 1.8260479
+9. Doc ID: 407 score = 1.7498753
+10. Doc ID: 407 score = 1.7498753
+
+Searching for: the crossing of fatty acids through the placental barrier normalfatty acid levels in placenta and fetus
+2066 total matching documents
+1. Doc ID: 8 score = 5.239419
+2. Doc ID: 8 score = 5.239419
+3. Doc ID: 326 score = 4.202943
+4. Doc ID: 326 score = 4.202943
+5. Doc ID: 327 score = 3.9998138
+6. Doc ID: 327 score = 3.9998138
+7. Doc ID: 329 score = 3.9006832
+8. Doc ID: 329 score = 3.9006832
+9. Doc ID: 333 score = 3.5943706
+10. Doc ID: 333 score = 3.5943706
+
+Searching for: ventricular septal defect occurring in association with aorticregurgitation
+2036 total matching documents
+1. Doc ID: 238 score = 3.4106963
+2. Doc ID: 238 score = 3.4106963
+3. Doc ID: 253 score = 2.8383737
+4. Doc ID: 253 score = 2.8383737
+5. Doc ID: 112 score = 2.737421
+6. Doc ID: 112 score = 2.737421
+7. Doc ID: 243 score = 2.6155457
+8. Doc ID: 243 score = 2.6155457
+9. Doc ID: 321 score = 2.6003933
+10. Doc ID: 321 score = 2.6003933
+
+Searching for: radioisotopes in heart scanning mainly used in diagnosis ofpericardial effusions also used to study tumors heart enlargement aneurysms and pericardial thickening technetium rihsa radioactivehippurate cholegraffin are used
+2064 total matching documents
+1. Doc ID: 189 score = 5.0926585
+2. Doc ID: 189 score = 5.0926585
+3. Doc ID: 391 score = 4.0642176
+4. Doc ID: 391 score = 4.0642176
+5. Doc ID: 121 score = 3.9392
+6. Doc ID: 121 score = 3.9392
+7. Doc ID: 82 score = 3.3370357
+8. Doc ID: 82 score = 3.3370357
+9. Doc ID: 392 score = 3.1241164
+10. Doc ID: 392 score = 3.1241164
+
+Searching for: the effects of drugs on the bone marrow of man and animals specifically the effect of pesticides also the significanceof bone marrow changes
+2066 total matching documents
+1. Doc ID: 52 score = 6.591529
+2. Doc ID: 52 score = 6.591529
+3. Doc ID: 265 score = 5.910663
+4. Doc ID: 265 score = 5.910663
+5. Doc ID: 431 score = 5.843827
+6. Doc ID: 431 score = 5.843827
+7. Doc ID: 434 score = 5.4579015
+8. Doc ID: 434 score = 5.4579015
+9. Doc ID: 262 score = 5.363216
+10. Doc ID: 262 score = 5.363216
+
+Searching for: the use of induced hypothermia in heart surgery neurosurgery headinjuries and infectious diseases
+2066 total matching documents
+1. Doc ID: 409 score = 3.0336826
+2. Doc ID: 409 score = 3.0336826
+3. Doc ID: 30 score = 2.7238925
+4. Doc ID: 30 score = 2.7238925
+5. Doc ID: 421 score = 2.5295923
+6. Doc ID: 421 score = 2.5295923
+7. Doc ID: 268 score = 2.5014598
+8. Doc ID: 268 score = 2.5014598
+9. Doc ID: 267 score = 2.4107633
+10. Doc ID: 267 score = 2.4107633
+
+Searching for: neoplasm immunology
+14 total matching documents
+1. Doc ID: 52 score = 0.9559019
+2. Doc ID: 52 score = 0.9559019
+3. Doc ID: 532 score = 0.77949476
+4. Doc ID: 532 score = 0.77949476
+5. Doc ID: 543 score = 0.7024416
+6. Doc ID: 543 score = 0.7024416
+7. Doc ID: 702 score = 0.66475534
+8. Doc ID: 702 score = 0.66475534
+9. Doc ID: 716 score = 0.58924264
+10. Doc ID: 716 score = 0.58924264
+
+Searching for: blood or urinary steroids in human breast or prostatic neoplasms
+2014 total matching documents
+1. Doc ID: 446 score = 2.2839901
+2. Doc ID: 446 score = 2.2839901
+3. Doc ID: 448 score = 2.0871139
+4. Doc ID: 448 score = 2.0871139
+5. Doc ID: 228 score = 1.9265336
+6. Doc ID: 228 score = 1.9265336
+7. Doc ID: 453 score = 1.8598562
+8. Doc ID: 453 score = 1.8598562
+9. Doc ID: 451 score = 1.823734
+10. Doc ID: 451 score = 1.823734
+
+Searching for: effect of azathioprine on systemic lupus erythematosus particularlyin regard to renal lesions
+2066 total matching documents
+1. Doc ID: 19 score = 4.3688254
+2. Doc ID: 19 score = 4.3688254
+3. Doc ID: 367 score = 3.3446689
+4. Doc ID: 367 score = 3.3446689
+5. Doc ID: 373 score = 3.2993772
+6. Doc ID: 373 score = 3.2993772
+7. Doc ID: 20 score = 3.0732439
+8. Doc ID: 20 score = 3.0732439
+9. Doc ID: 371 score = 2.7206945
+10. Doc ID: 371 score = 2.7206945
+
+Searching for: bacillus subtilis phages and genetics with particular referenceto transduction
+2030 total matching documents
+1. Doc ID: 197 score = 3.2020252
+2. Doc ID: 197 score = 3.2020252
+3. Doc ID: 196 score = 3.0888314
+4. Doc ID: 196 score = 3.0888314
+5. Doc ID: 481 score = 2.2637331
+6. Doc ID: 481 score = 2.2637331
+7. Doc ID: 195 score = 2.081768
+8. Doc ID: 195 score = 2.081768
+9. Doc ID: 470 score = 2.0120506
+10. Doc ID: 470 score = 2.0120506
+
+Searching for: renal amyloidosis as a complication of tuberculosis and the effectsof steroids on this condition only the terms kidney diseases andnephrotic syndrome were selected by the requester prednisone andprednisolone are the only steroids of interest
+2066 total matching documents
+1. Doc ID: 23 score = 5.7583995
+2. Doc ID: 23 score = 5.7583995
+3. Doc ID: 861 score = 5.2939324
+4. Doc ID: 861 score = 5.2939324
+5. Doc ID: 26 score = 5.2553463
+6. Doc ID: 26 score = 5.2553463
+7. Doc ID: 371 score = 5.0877595
+8. Doc ID: 371 score = 5.0877595
+9. Doc ID: 457 score = 4.9378834
+10. Doc ID: 457 score = 4.9378834
+
+Searching for: homonymous hemianopsia in visual aphasia particularlymeasurement and assessment gerstmann's syndrome and agnosia are alsoof interest
+2058 total matching documents
+1. Doc ID: 355 score = 3.26129
+2. Doc ID: 355 score = 3.26129
+3. Doc ID: 350 score = 3.031787
+4. Doc ID: 350 score = 3.031787
+5. Doc ID: 106 score = 2.8919783
+6. Doc ID: 106 score = 2.8919783
+7. Doc ID: 103 score = 2.7979944
+8. Doc ID: 103 score = 2.7979944
+9. Doc ID: 361 score = 2.7513268
+10. Doc ID: 361 score = 2.7513268
+
+Searching for: separation anxiety in infancy i.e up to two years of age and inpreschool children particularly separation of a child from its mother
+2066 total matching documents
+1. Doc ID: 202 score = 5.377487
+2. Doc ID: 202 score = 5.377487
+3. Doc ID: 99 score = 5.067535
+4. Doc ID: 99 score = 5.067535
+5. Doc ID: 36 score = 4.8963184
+6. Doc ID: 36 score = 4.8963184
+7. Doc ID: 818 score = 4.538891
+8. Doc ID: 818 score = 4.538891
+9. Doc ID: 488 score = 4.073732
+10. Doc ID: 488 score = 4.073732
+
+Searching for: nickel in nutrition requirements for methods for analysis relationwith enzyme systems toxicity of in humans and laboratory animals deficiency signs and symptoms level in various foodstuffs level inblood and tissues
+2066 total matching documents
+1. Doc ID: 127 score = 3.7526333
+2. Doc ID: 127 score = 3.7526333
+3. Doc ID: 129 score = 3.6835287
+4. Doc ID: 129 score = 3.6835287
+5. Doc ID: 133 score = 3.6696177
+6. Doc ID: 133 score = 3.6696177
+7. Doc ID: 134 score = 3.5852349
+8. Doc ID: 134 score = 3.5852349
+9. Doc ID: 304 score = 3.5474775
+10. Doc ID: 304 score = 3.5474775
+
+Searching for: the toxicity of organic selenium compounds
+2066 total matching documents
+1. Doc ID: 134 score = 2.3483777
+2. Doc ID: 134 score = 2.3483777
+3. Doc ID: 528 score = 2.172159
+4. Doc ID: 528 score = 2.172159
+5. Doc ID: 527 score = 2.027526
+6. Doc ID: 527 score = 2.027526
+7. Doc ID: 45 score = 2.0123825
+8. Doc ID: 45 score = 2.0123825
+9. Doc ID: 48 score = 1.9924845
+10. Doc ID: 48 score = 1.9924845
+
+Searching for: excretion of phosphate or pyrophosphate in the urine or the effect ofparathyroid hormone on kidney
+2066 total matching documents
+1. Doc ID: 844 score = 3.6753922
+2. Doc ID: 844 score = 3.6753922
+3. Doc ID: 861 score = 3.6710715
+4. Doc ID: 861 score = 3.6710715
+5. Doc ID: 847 score = 3.4751794
+6. Doc ID: 847 score = 3.4751794
+7. Doc ID: 864 score = 3.2255127
+8. Doc ID: 864 score = 3.2255127
+9. Doc ID: 585 score = 3.1538622
+10. Doc ID: 585 score = 3.1538622
+
+Searching for: somatotropin as it effects bone bone development regeneration resorption bone cells osteogenesis physiologic calcification orossification cartilage and bone diseases in general somatotropin asit relates to hypophysectomy pituitary function diseases dwarfism neoplasms hypopituitarism and hyperpituitarism and growth in general
+2064 total matching documents
+1. Doc ID: 431 score = 5.7249312
+2. Doc ID: 431 score = 5.7249312
+3. Doc ID: 52 score = 5.373798
+4. Doc ID: 52 score = 5.373798
+5. Doc ID: 860 score = 5.361108
+6. Doc ID: 860 score = 5.361108
+7. Doc ID: 596 score = 5.214279
+8. Doc ID: 596 score = 5.214279
+9. Doc ID: 1024 score = 4.88164
+10. Doc ID: 1024 score = 4.88164
+
+Searching for: language development in infancy and pre school age
+2056 total matching documents
+1. Doc ID: 896 score = 2.179186
+2. Doc ID: 896 score = 2.179186
+3. Doc ID: 887 score = 1.9711616
+4. Doc ID: 887 score = 1.9711616
+5. Doc ID: 766 score = 1.946268
+6. Doc ID: 766 score = 1.946268
+7. Doc ID: 892 score = 1.8699356
+8. Doc ID: 892 score = 1.8699356
+9. Doc ID: 613 score = 1.7836374
+10. Doc ID: 613 score = 1.7836374
+
+Searching for: mycoplasma infection or presence in embryo fetus newborn infantor animal or in pregnancy gynecologic diseases or as related tochromosomes or chromosome abnormalities
+2016 total matching documents
+1. Doc ID: 648 score = 3.3748584
+2. Doc ID: 648 score = 3.3748584
+3. Doc ID: 701 score = 3.178243
+4. Doc ID: 701 score = 3.178243
+5. Doc ID: 636 score = 3.147501
+6. Doc ID: 636 score = 3.147501
+7. Doc ID: 93 score = 3.0048363
+8. Doc ID: 93 score = 3.0048363
+9. Doc ID: 649 score = 2.7610579
+10. Doc ID: 649 score = 2.7610579
+
+Searching for: infantile autism
+60 total matching documents
+1. Doc ID: 819 score = 1.7854025
+2. Doc ID: 819 score = 1.7854025
+3. Doc ID: 916 score = 1.6057047
+4. Doc ID: 916 score = 1.6057047
+5. Doc ID: 849 score = 1.5735724
+6. Doc ID: 849 score = 1.5735724
+7. Doc ID: 804 score = 1.5499468
+8. Doc ID: 804 score = 1.5499468
+9. Doc ID: 917 score = 1.5202154
+10. Doc ID: 917 score = 1.5202154
+
+Searching for: compensatory renal hypertrophy stimulus resulting in mass increase hypertrophy and cell proliferation hyperplasia in the remainingkidney following unilateral nephrectomy in mammals
+2066 total matching documents
+1. Doc ID: 667 score = 5.9839816
+2. Doc ID: 667 score = 5.9839816
+3. Doc ID: 939 score = 5.753331
+4. Doc ID: 939 score = 5.753331
+5. Doc ID: 938 score = 5.679021
+6. Doc ID: 938 score = 5.679021
+7. Doc ID: 850 score = 5.5343833
+8. Doc ID: 850 score = 5.5343833
+9. Doc ID: 674 score = 5.5082507
+10. Doc ID: 674 score = 5.5082507
+
+Searching for: use of chlorothiazide diuril or hydrochlorothiazide hydrodiuril inthe treatment of nephogenic diabetes insipidus in children also use of low sodium diets and aldactone spironolactone in the treatmentof childhood nephogenic diabetes insipidus
+2066 total matching documents
+1. Doc ID: 687 score = 6.99316
+2. Doc ID: 687 score = 6.99316
+3. Doc ID: 690 score = 6.245387
+4. Doc ID: 690 score = 6.245387
+5. Doc ID: 695 score = 6.1848974
+6. Doc ID: 695 score = 6.1848974
+7. Doc ID: 699 score = 6.1692266
+8. Doc ID: 699 score = 6.1692266
+9. Doc ID: 696 score = 5.810021
+10. Doc ID: 696 score = 5.810021
+
+Searching for: methods for experimental production of and known causes ofhydrocephalus in animals and humans
+2066 total matching documents
+1. Doc ID: 859 score = 2.2718384
+2. Doc ID: 859 score = 2.2718384
+3. Doc ID: 657 score = 2.1797373
+4. Doc ID: 657 score = 2.1797373
+5. Doc ID: 981 score = 2.0597034
+6. Doc ID: 981 score = 2.0597034
+7. Doc ID: 1018 score = 2.0538516
+8. Doc ID: 1018 score = 2.0538516
+9. Doc ID: 737 score = 1.972521
+10. Doc ID: 737 score = 1.972521
+
+Searching for: interested in the parasitic diseases filaria parasites found inprimates the insect vectors of filaria the related diptera i e culicoides mosquitos etc that may serve as vectors of thisinfection disease also the life cycles and transmission of thefilaria parasites and ecology of the taiwan monkey macaca cyclopis with emphasis on the filarial parasite macacanema formosana
+2066 total matching documents
+1. Doc ID: 734 score = 6.6992145
+2. Doc ID: 734 score = 6.6992145
+3. Doc ID: 732 score = 6.4920344
+4. Doc ID: 732 score = 6.4920344
+5. Doc ID: 731 score = 5.756612
+6. Doc ID: 731 score = 5.756612
+7. Doc ID: 980 score = 5.67418
+8. Doc ID: 980 score = 5.67418
+9. Doc ID: 984 score = 5.643253
+10. Doc ID: 984 score = 5.643253
+
+Searching for: palliation temporary improvement of cancer patients by usingdrugs x ray surgery
+2060 total matching documents
+1. Doc ID: 779 score = 2.742996
+2. Doc ID: 779 score = 2.742996
+3. Doc ID: 774 score = 2.1880996
+4. Doc ID: 774 score = 2.1880996
+5. Doc ID: 995 score = 1.9774569
+6. Doc ID: 995 score = 1.9774569
+7. Doc ID: 840 score = 1.9501694
+8. Doc ID: 840 score = 1.9501694
+9. Doc ID: 621 score = 1.9114791
+10. Doc ID: 621 score = 1.9114791
+
+Searching for: hereditary implications of prolonged neonatal obstructive jaundiceassociated with liver pathology there are but two relativelycommon well defined pathologic entities that present as such 1 bileduct or biliary atresia and 2 giant cell transformation of the liveroften referred to as neonatal hepatitis information regardingliver and bile duct embryogenesis will be an important adjunctto papers on the disease processes
+2066 total matching documents
+1. Doc ID: 1012 score = 9.342414
+2. Doc ID: 1012 score = 9.342414
+3. Doc ID: 1015 score = 8.719196
+4. Doc ID: 1015 score = 8.719196
+5. Doc ID: 1017 score = 8.66253
+6. Doc ID: 1017 score = 8.66253
+7. Doc ID: 853 score = 8.320472
+8. Doc ID: 853 score = 8.320472
+9. Doc ID: 1009 score = 6.8957577
+10. Doc ID: 1009 score = 6.8957577
+
+Searching for: hemophilia and christmas disease especially in regard to thespecific complication of pseudotumor formation occurrence pathogenesis treatment prognosis
+2066 total matching documents
+1. Doc ID: 1026 score = 3.9357347
+2. Doc ID: 1026 score = 3.9357347
+3. Doc ID: 1027 score = 3.8791633
+4. Doc ID: 1027 score = 3.8791633
+5. Doc ID: 1024 score = 2.4295356
+6. Doc ID: 1024 score = 2.4295356
+7. Doc ID: 839 score = 2.1427245
+8. Doc ID: 839 score = 2.1427245
+9. Doc ID: 920 score = 2.1352382
+10. Doc ID: 920 score = 2.1352382
+
