@@ -60,7 +60,9 @@ public class SearchEvalMedline {
 	static int queryMode =0;
 	static String queryRange = "1-3";
 	static String queryNum = "3";
-
+	static float totalP = 0;
+	static float totalR = 0;
+	static float totalAP = 0;
 	private SearchEvalMedline() {
 	}
 	public static HashMap<Integer, String> findQuery(String n) throws IOException {
@@ -122,12 +124,13 @@ public class SearchEvalMedline {
 		String field = "contents";
 		List<Float> metrics = new ArrayList<>();
 		float lambda = 0.5f;
-		int cut = 1;
-		int top = 1;
+		int cut = 10;
+		int top = 10;
 		boolean raw = false;
 		int knnVectors = 0;
 		String queryString = null;
 		int hitsPerPage = 10;
+
 
 		//Documento con las salidas del ranking
 		String outputfile = "medline."+indexingmodel+"."+hitsPerPage+".lambda."+lambda+"qall"+".txt";
@@ -210,8 +213,11 @@ public class SearchEvalMedline {
 		}
 
 		System.out.println("Tomate "+ queries.toString());
+
+		bw2.write("Query I"+";"+" P "+";"+" R "+";"+" AP "+";"+"Corte n: "+cut);
+		bw2.write("\n");
 		for
-			(Map.Entry<Integer, String> entry : queries.entrySet()) {
+			(Map.Entry<Integer, String> entry : queries.entrySet()) {		//para cada query
 				System.out.println("Remolacha");
 				int num = entry.getKey();
 				String line = entry.getValue();
@@ -221,6 +227,7 @@ public class SearchEvalMedline {
 				doPagingSearch(searcher, query, num,cut,top,metrics, field, bw, bw2);
 				bw.write("\n");
 		}
+		bw2.write("Promedios: "+" "+";"+" "+totalP/queryCount+" "+";"+" "+totalR/queryCount+" "+";"+" "+totalAP/queryCount);
 		/*if (knnVectors > 0) {
 			query = addSemanticQuery(query, vectorDict, knnVectors);
 		}*/
@@ -283,6 +290,7 @@ public class SearchEvalMedline {
 		bw.write(numTotalHits + " total matching documents" + "\n");
 		System.out.println(numTotalHits + " total matching documents");
 
+
 		//this loop is used for calculating the metrics
 		int end = Math.min(numTotalHits, cut);
 		int n = 1;
@@ -306,19 +314,20 @@ public class SearchEvalMedline {
 			Document doc = searcher.doc(hits[i].doc);
 			int id = Integer.parseInt(doc.get("DocIDMedline"));
 			System.out.println((i + 1) + ". Doc ID: " + id + " score = " + hits[i].score);
-			bw2.write("Doc ID: " + id+",");
+
 			bw.write(""+(i+1));
 			bw.write(". Doc ID: " + id + " score = " + hits[i].score +"\n");
+
 		}
 		System.out.println();
 				//P
 				System.out.println("Precision at " + cut + " = " + (float) relevantSet.size() / cut);
 				metrics.add((float) relevantSet.size() / cut);
-				bw2.write(""+(float) relevantSet.size() / cut);
+
 				//R
 				System.out.println("Recall at " + cut + " = " + (float) relevantSet.size() / relevantDocs.size());
 				metrics.add((float) relevantSet.size() / relevantDocs.size());
-				bw2.write(""+(float) relevantSet.size() / relevantDocs.size());
+
 				//MAP
 				if (relevantSet.size() != 0) {
 					float sum = 0;
@@ -326,14 +335,18 @@ public class SearchEvalMedline {
 						sum += d;
 					System.out.println("Mean Average Precision at " + cut + " = " + (float) sum / relevantSet.size());
 					metrics.add((float) sum / relevantSet.size());
-					bw2.write(""+(float) sum / relevantSet.size()+ "\n");
+					bw2.write(" "+num+" "+";"+" "+(float) relevantSet.size() / cut);	//P
+					totalP += (float) relevantSet.size() / cut;
+					bw2.write(";"+" "+(float) relevantSet.size() / relevantDocs.size());	//R
+					totalR += (float) relevantSet.size() / relevantDocs.size();
+					bw2.write(";"+" "+(float) sum / relevantSet.size());	//MAP
+					totalAP += (float) sum / relevantSet.size();
+					bw2.write("\n");
+
 				} else
 					System.out.println("Can't compute Mean Average Precision at " + cut + ", no relevant documents found");
-
-
 
 		System.out.println();
 		queryCount++;
 	}
-
 }
