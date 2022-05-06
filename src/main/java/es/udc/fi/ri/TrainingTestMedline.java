@@ -87,7 +87,7 @@ public class TrainingTestMedline {
         int num = 0;
         float aux = 0.0f;
         FileWriter documento3= new FileWriter("medline.jm.training."+null+".test."+queryRange+"."+metrica+cut+".test.csv",true);
-        documento3.append(metrica+";"+cut+"\n");
+        documento3.append(metrica+"@"+cut+"\n");
         queries.putAll(findQueries(queryRange));
         QueryParser parser = new QueryParser(field, analyzer);
         searcher.setSimilarity(new ClassicSimilarity());
@@ -110,12 +110,13 @@ public class TrainingTestMedline {
         float aux2[] = new float[11];
         float aux3=0.0f;
         int num = 0;
+
         System.out.println("Mensaje de entrenamiento");
          queries.putAll(findQueries(queryRange));
         queries2.putAll(findQueries(queryRange2));
         QueryParser parser = new QueryParser(field, analyzer);
         FileWriter documento= new FileWriter("medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".training.csv",true);
-        documento.append(metrica+";"+cut+"\n");
+        documento.append(metrica+"@"+cut+"\n");
        documento.append("query;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0\n");
         for (Map.Entry<Integer, String> entry : queries.entrySet()) {
             documento.append(entry.getKey()+";");
@@ -142,7 +143,7 @@ public class TrainingTestMedline {
         documento.close();
         FileWriter documento2= new FileWriter("medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".test.csv",true);
         searcher.setSimilarity(new LMJelinekMercerSimilarity(auxlambda));
-        documento2.append(auxlambda+";"+metrica+"\n");
+        documento2.append(auxlambda+";"+metrica+"@"+cut+"\n");
         for (Map.Entry<Integer, String> entry : queries2.entrySet()) {
             num = entry.getKey();
             String line = entry.getValue();

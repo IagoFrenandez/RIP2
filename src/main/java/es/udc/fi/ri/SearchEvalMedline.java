@@ -53,8 +53,8 @@ public class SearchEvalMedline {
 
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
-	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
-	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
+	static final Path QUERIES_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.QRY");
+	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
 	static int queryCount=0;
 	static int queryMode =0;
@@ -213,7 +213,7 @@ public class SearchEvalMedline {
 
 
 
-		bw2.write("Query I"+";"+" P "+";"+" R "+";"+" AP "+";"+"Corte n: "+cut);
+		bw2.write("Query I"+";"+" P@"+cut+";"+" R@"+cut+";"+" AP@"+cut);
 		bw2.write("\n");
 		for
 			(Map.Entry<Integer, String> entry : queries.entrySet()) {		//para cada query
