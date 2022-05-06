@@ -53,8 +53,8 @@ public class SearchEvalMedline {
 
 	static HashMap<Integer, String> queries = new HashMap<>();
 	static final String ALL_QUERIES = "1-30";
-	static final Path QUERIES_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.QRY");
-	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\usuario\\Desktop\\RI\\Medline\\MED.REL");
+	static final Path QUERIES_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.QRY");
+	static final Path RELEVANCE_PATH = Paths.get("C:\\Users\\iagof\\Desktop\\RI\\med.tar\\MED.REL");
 	static Path queryFile = QUERIES_PATH;
 	static int queryCount=0;
 	static int queryMode =0;
@@ -95,7 +95,6 @@ public class SearchEvalMedline {
 		}
 	}
 	public static HashMap<Integer, String> findQueries(String range) throws IOException {
-		System.out.println("Guisante");
 		HashMap<Integer, String> result = new HashMap<>();
 		String nums[] = range.split("-");
 
@@ -203,16 +202,16 @@ public class SearchEvalMedline {
 				searcher.setSimilarity(new ClassicSimilarity());
 				break;
 		}
-		System.out.println("Cebolla "+queryRange);
+
 		if(queryMode == 0){
-			System.out.println("Zanahoria");
+
 			queries.putAll(findQueries(queryRange));
 		}else{
-			System.out.println("Lechuga");
+
 			queries.putAll(findQuery(queryNum));
 		}
 
-		System.out.println("Tomate "+ queries.toString());
+
 
 		bw2.write("Query I"+";"+" P "+";"+" R "+";"+" AP "+";"+"Corte n: "+cut);
 		bw2.write("\n");
@@ -280,7 +279,7 @@ public class SearchEvalMedline {
 		ScoreDoc[] hits = results.scoreDocs;
 		List<Integer> relevantDocs = findRelevantDocs(RELEVANCE_PATH, num);
 		Set<Integer> relevantSet = new HashSet<>();
-
+		int auxf=0;
 		List<Float> accumPrecision = new ArrayList<>();
 
 		System.out.println("RELEVANT DOCS = " + relevantDocs.toString());
@@ -329,10 +328,11 @@ public class SearchEvalMedline {
 				metrics.add((float) relevantSet.size() / relevantDocs.size());
 
 				//MAP
-				if (relevantSet.size() != 0) {
+				if (relevantSet.size() > auxf) {
+					auxf++;
 					float sum = 0;
 					for (Float d : accumPrecision)
-						sum += d;
+						sum +=(float) relevantSet.size() / cut;
 					System.out.println("Mean Average Precision at " + cut + " = " + (float) sum / relevantSet.size());
 					metrics.add((float) sum / relevantSet.size());
 					bw2.write(" "+num+" "+";"+" "+(float) relevantSet.size() / cut);	//P
@@ -347,6 +347,6 @@ public class SearchEvalMedline {
 					System.out.println("Can't compute Mean Average Precision at " + cut + ", no relevant documents found");
 
 		System.out.println();
-		queryCount++;
+		queryCount+=3;
 	}
 }

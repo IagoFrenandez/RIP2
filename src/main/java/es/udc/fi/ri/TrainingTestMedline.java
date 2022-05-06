@@ -86,6 +86,8 @@ public class TrainingTestMedline {
     public static void evaltfidf(IndexSearcher searcher, Analyzer analyzer,int cut, String metrica) throws IOException, ParseException {
         int num = 0;
         float aux = 0.0f;
+        FileWriter documento3= new FileWriter("medline.jm.training."+null+".test."+queryRange+"."+metrica+cut+".test.csv",true);
+        documento3.append(metrica+";"+cut+"\n");
         queries.putAll(findQueries(queryRange));
         QueryParser parser = new QueryParser(field, analyzer);
         searcher.setSimilarity(new ClassicSimilarity());
@@ -95,7 +97,10 @@ public class TrainingTestMedline {
             line = line.trim();
             Query query = parser.parse(QueryParser.escape(line));
             aux= doPagingSearch(searcher, query, num,cut,metrica);
-            System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);}
+            System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);
+        documento3.append(num+";"+aux+"\n");}
+        documento3.close();
+
     }
     public static void evaljm(IndexSearcher searcher, Analyzer analyzer,int cut, String metrica) throws IOException, ParseException {
         float lambda=0.1f;
@@ -103,12 +108,13 @@ public class TrainingTestMedline {
         float metricas = 0.0f;
         float aux = 0.0f;
         float aux2[] = new float[11];
+        float aux3=0.0f;
         int num = 0;
         System.out.println("Mensaje de entrenamiento");
          queries.putAll(findQueries(queryRange));
         queries2.putAll(findQueries(queryRange2));
         QueryParser parser = new QueryParser(field, analyzer);
-        FileWriter documento= new FileWriter(index+"/"+"medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".training.csv",true);
+        FileWriter documento= new FileWriter("medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".training.csv",true);
         documento.append(metrica+";"+cut+"\n");
        documento.append("query;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0\n");
         for (Map.Entry<Integer, String> entry : queries.entrySet()) {
@@ -134,16 +140,22 @@ public class TrainingTestMedline {
         for (int i=1;i<aux2.length;i++){
             documento.append((aux2[i]/aux2.length)+";");}
         documento.close();
-        FileWriter documento2= new FileWriter(index+"/"+"medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".test.csv",true);
+        FileWriter documento2= new FileWriter("medline.jm.training."+queryRange+".test."+queryRange2+"."+metrica+cut+".test.csv",true);
         searcher.setSimilarity(new LMJelinekMercerSimilarity(auxlambda));
-        documento.append(auxlambda+";"+metrica+"\n");
+        documento2.append(auxlambda+";"+metrica+"\n");
         for (Map.Entry<Integer, String> entry : queries2.entrySet()) {
             num = entry.getKey();
             String line = entry.getValue();
             line = line.trim();
             Query query = parser.parse(QueryParser.escape(line));
             aux= doPagingSearch(searcher, query, num,cut,metrica);
+            documento2.append(num+";"+aux+"\n");
+            aux3+=aux;
             System.out.println("Para la query "+num+" su metrica en "+metrica+" es " +aux);}
+
+        System.out.println("Promedio:"+";"+(aux3/queries2.size())+"\n");
+        documento2.append("Promedio:"+";"+(aux3/queries2.size())+"\n");
+        documento2.close();
         System.out.println("Mejor metrica "+ metricas);
         }
 
@@ -286,7 +298,7 @@ public class TrainingTestMedline {
                 if (relevantSet.size() != 0) {
                     float sum = 0;
                     for (Float d : accumPrecision)
-                        sum += d;
+                        sum += (float) relevantSet.size() / cut;;
                     return (float) sum / relevantSet.size();
                 }
             }
