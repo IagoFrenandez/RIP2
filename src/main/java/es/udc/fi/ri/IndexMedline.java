@@ -55,7 +55,6 @@ static void parserall(Path file, Path indexpath) throws IOException {
                 FileWriter documento= new FileWriter(indexpath.toString()+"/"+"meddocs/"+n+".txt",true);
                 PrintWriter pw = new PrintWriter(documento);
                 line=br.readLine();
-                System.out.println(line);
                 if ((line).equals(".W")){
                     line=br.readLine();
                     pw.println(n);
